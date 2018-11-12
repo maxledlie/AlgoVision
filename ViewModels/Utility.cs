@@ -39,13 +39,13 @@ namespace ViewModels
             return true;
         }
 
-        public static List<int> RandomIntList(int length, int minValue, int maxValue)
+        public static int[] RandomIntArray(int length, int minValue, int maxValue)
         {
             var random = new Random();
-            var ret = new List<int>();
+            var ret = new int[length];
 
             for (int i = 0; i < length; i++)
-                ret.Add(random.Next(minValue, maxValue));
+                ret[i] = random.Next(minValue, maxValue);
 
             return ret;
         }        

@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using ViewModels;
 
-namespace ArrayPlot
+namespace AlgoVisionGUI
 {
     class AlgorithmToStringConverter : IValueConverter
     {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace ArrayPlot
+namespace AlgoVisionGUI
 {
     class IntsToColumnItemsConverter : IValueConverter
     {

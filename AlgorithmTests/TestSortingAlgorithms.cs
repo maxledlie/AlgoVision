@@ -1,7 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using ViewModels;
 
 namespace AlgorithmTests
@@ -9,12 +6,12 @@ namespace AlgorithmTests
     [TestClass]
     public class TestSortingAlgorithms
     {
-        private IList<int> _list;
+        private int[] _list;
 
         [TestInitialize]
         public void SetUp()
         {
-            _list = Utility.RandomIntList(10, -10, 10);
+            _list = Utility.RandomIntArray(10, -10, 10);
         }
 
         [TestMethod]
