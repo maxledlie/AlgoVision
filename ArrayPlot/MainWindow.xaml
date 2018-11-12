@@ -1,0 +1,64 @@
+﻿<Window x:Class="ArrayPlot.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ArrayPlot"
+        xmlns:viewmodels="clr-namespace:ViewModels;assembly=ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" WindowState="Maximized">
+    <Window.DataContext>
+        <viewmodels:MainViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <local:IntsToColumnItemsConverter x:Key="IntsToColumnItemsConverter"/>
+        <local:AlgorithmToStringConverter x:Key="AlgorithmToStringConverter"/>
+        <Style TargetType="Menu">
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+    </Window.Resources>
+    <Grid x:Name="Root">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!-- Toolbar menu -->
+        <Menu Grid.Row="0" DataContext="{Binding Player}">
+            <!-- Algorithm selector -->
+            <ComboBox x:Name="AlgorithmSelector"
+                      IsEnabled="{Binding Stopped, UpdateSourceTrigger=PropertyChanged}" 
+                      ItemsSource="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.Algorithms}"
+                      SelectedItem="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.SelectedAlgorithm}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            
+            <!-- Player commands -->
+            <MenuItem Header="Play" IsEnabled="{Binding PlayEnabled}" 
+                      Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.SortCommand}"/>
+            <MenuItem Header="Pause" IsEnabled="{Binding PauseEnabled}"
+                      Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.PauseCommand}"/>
+            <MenuItem Header="Step" IsEnabled="{Binding StepEnabled}"
+                      Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.StepCommand}"/>
+            <MenuItem Header="Stop" IsEnabled="{Binding StopEnabled}"
+                      Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.StopCommand}"/>
+            
+            <!-- Shuffle Button -->
+            <MenuItem Header="Shuffle" IsEnabled="{Binding Stopped}" 
+                      Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ShuffleCommand}"/>
+
+            <!-- Speed Gauge -->
+            <Slider Minimum="1" Maximum="100" Interval="1" Value="{Binding PlaybackSpeed, Mode=TwoWay}"
+                    TickPlacement="Both" TickFrequency="10" IsSnapToTickEnabled="True" Width="300"/>
+        </Menu>
+        
+        <!-- Visual display -->
+        <local:ArrayControl Grid.Row="1"
+                            Array="{Binding Array,UpdateSourceTrigger=PropertyChanged,
+                                    Converter={StaticResource IntsToColumnItemsConverter}}"/>
+    </Grid>
+</Window>

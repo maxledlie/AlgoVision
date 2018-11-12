@@ -1,0 +1,2 @@
+Made the calling syntax for ISortingAlgorithm.Sort() cleaner.
+Moved some routines into a utility class.
